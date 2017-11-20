@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStragety = require('passport-google-oauth20');
 const mongoose = require('mongoose');
-const keys = require('../config/keys');
+const config = require('../config');
 
 const User = mongoose.model('User');
 
@@ -18,8 +18,8 @@ passport.deserializeUser((id, done) => {
 // tell passport to use google-stragety
 passport.use(new GoogleStragety(
   {
-    clientID: keys.googleClientId,
-    clientSecret: keys.googleClientSecret,
+    clientID: config.googleClientId,
+    clientSecret: config.googleClientSecret,
     callbackURL: '/auth/google/callback'
   },
   (accessToken, refreshToken, profile, done) => {
