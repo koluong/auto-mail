@@ -21,6 +21,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(authRouter);
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3001, () => {
+  console.log(process.env.PORT || 3001);
 });
