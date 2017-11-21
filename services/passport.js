@@ -23,18 +23,17 @@ passport.use(new GoogleStragety(
     callbackURL: '/auth/google/callback',
     proxy: true
   },
-  (accessToken, refreshToken, profile, done) => {
-    User.findOne({ googleId: profile.id }).then((user) => {
-      if (user) {
-        // already have user
-        console.log('There is already an existing user');
-        done(null, user);
-      } else {
-        User.create({ googleId: profile.id }, (err, user) => {
-          console.log(user);
-          done(null, user);
-        });
-      }
-    });
+  async (accessToken, refreshToken, profile, done) => {
+    const user = await User.findOne({ googleId: profile.id });
+    if (user) {
+      console.log('There is already an existing user');
+      return done(null, user);
+    }
+    try {
+      const user = await User.create({ googleId: profile.id });
+      done(null, user);
+    } catch (e) {
+      console.log(e);
+    }
   }
 ));
